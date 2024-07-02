@@ -18,8 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->get('/', [TaskController::class, 'index'])->name('index');
 
-Route::get('/delete-task/{id}', [TaskController::class, 'deleteTask'])->name('deleteTask');
-
+Route::get('/create-task', [TaskController::class, 'createTask'])->name('createTask');
 Route::delete('/delete-task/{id}', [TaskController::class, 'deleteTask'])->name('deleteTask');
 
 require __DIR__.'/auth.php';

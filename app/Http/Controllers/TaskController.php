@@ -9,16 +9,18 @@ class TaskController extends Controller
 {
     public function index(Request $request)
     {
-        // $tasks = Task::where('user_id', $request->user->id)->orderBy("created_at", "desc");
-        // return view('welcome', ['tasks' => $tasks]);
-        $tasks = Task::orderBy("created_at", "desc")->get();
+        $tasks = Task::where('user_id', auth()->id())->orderBy("created_at", "desc")->get();
         return view('welcome', ['tasks' => $tasks]);
     }
 
-    public function createTask()
+    public function createTask(Request $request)
     {
-        $tasks = Task::orderBy("created_at", "desc");
-        return view('welcome', ['tasks' => $tasks]);
+        Task::create([
+            'user_id' => auth()->id(),
+            'name' => $request->name,
+            'descr' => $request->descr,
+        ]);
+        return redirect()->route('index')->with('success','Задание успешно создано');
     }
 
     public function deleteTask($id)
